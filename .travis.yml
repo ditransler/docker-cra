@@ -5,3 +5,14 @@ before_install:
   - docker build -t ditransler/docker-cra -f Dockerfile.dev .
 script:
   - docker run -e CI=true ditransler/docker-cra npm run test
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-cra"
+  env: "DockerCra-env"
+  bucket_name: "elasticbeanstalk-us-east-2-958858930604"
+  bucket_path: "docker-cra"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
